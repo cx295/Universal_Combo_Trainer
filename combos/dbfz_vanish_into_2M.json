@@ -1,0 +1,41 @@
+{
+"game":"DragonBallFighterZ", 
+    "combo": [
+		{"tap":{
+			"key": ["M"], 
+			"bip": "1", 
+			"in": "0", 
+			"aft": "10"}
+		},
+		{"tap":{
+			"key": ["M","H"], 
+			"bip": "1", 
+			"in": "0", 
+			"aft": "70"}
+		},
+		{"tap":{
+			"key": ["left"], 
+			"bip": "1", 
+			"in": "0", 
+			"aft": "5"}
+		},
+		{"tap":{
+			"key": ["left"], 
+			"bip": "1", 
+			"in": "0", 
+			"aft": "5"}
+		},
+		{"tap":{
+			"key": ["down","M"], 
+			"bip": "1", 
+			"in": "0", 
+			"aft": "10"}
+		},
+		{"tap":{
+			"key": ["M"], 
+			"bip": "1", 
+			"in": "0", 
+			"aft": "10"}
+		}
+    ]
+}
