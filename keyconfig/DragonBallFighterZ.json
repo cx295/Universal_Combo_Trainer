@@ -1,1 +1,16 @@
-
+{
+"game":"DragonBallFighterZ", 
+    "buttonConfig": {
+        "up": "w",
+        "down": "s",
+        "left": "a",
+        "right": "d",
+        "L": "u",
+        "M": "i",
+        "H": "p",
+		"S": "j",
+        "A1": "k",
+        "A2": ";",
+		"wait": "esc"
+    }
+}
