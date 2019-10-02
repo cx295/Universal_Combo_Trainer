@@ -5,28 +5,26 @@
 
 # In[ ]:
 
-
 from playsound import playsound
 import keyboard
 import pandas
 import os
 import time
 import json
-from PyQt5.QtWidgets import QApplication, QLabel
+#from PyQt5.QtWidgets import QApplication, QLabel
 
-combo_file_location_path = os.path.join(os.path.pardir, 'ComboTrainer', 'combos')
+combo_file_location_path = os.path.join(os.path.pardir, 'Universal_Combo_Trainer', 'combos')
 #combo_data_file_path = os.path.join(combo_file_location_path, 'IAD.json')
 #combo_data_file_path = os.path.join(combo_file_location_path, 'dbfz_universal_bnb.json')
 combo_data_file_path = os.path.join(combo_file_location_path, 'dbfz_vanish_into_2M.json')
 
 print(combo_data_file_path)
 
-sound_file_location_path = os.path.join(os.path.pardir, 'ComboTrainer', 'resources')
+sound_file_location_path = os.path.join(os.path.pardir, 'Universal_Combo_Trainer', 'resources')
 sound_file_path = os.path.join(sound_file_location_path, 'click.wav')
 
 print(sound_file_path)
-
-keyconfig_file_location_path = os.path.join(os.path.pardir, 'ComboTrainer', 'keyconfig')
+keyconfig_file_location_path = os.path.join(os.path.pardir, 'Universal_Combo_Trainer', 'keyconfig')
 keyconfig_file_path = os.path.join(keyconfig_file_location_path, 'DragonBallFighterZ.json')
 
 print(keyconfig_file_path)
@@ -64,14 +62,6 @@ class KeyboardAction:
 class TechniqueHandler:
     def __init__(self):
         pass
-       
-class TapHandler(TechniqueHandler):
-    def __init__(self, combodict):
-        self.key = combodict['key']
-        self.bip = combodict['bip']
-        self.inwait = combodict['in']
-        self.afterwait = combodict['aft']
-        
     def tap(self,keyarray,sound,inwait,afterwait):
         for key in keyarray:
             keysBound[key].pressKey()
@@ -83,11 +73,19 @@ class TapHandler(TechniqueHandler):
             keysBound[key].releaseKey()
         if afterwait > 0:
             t.wait_frames(afterwait)
-            
-    def do_actions(self):
-        tap(key, int(bip), int(inwait), int(afterwait))
+       
+class TapHandler(TechniqueHandler):
+    def __init__(self, combodict):
+        self.key = combodict['key']
+        self.bip = combodict['bip']
+        self.inwait = combodict['in']
+        self.afterwait = combodict['aft']
+
+    def do_action(self):
+        self.tap(self.key, int(self.bip), int(self.inwait), int(self.afterwait))
 
 class SlurHandler(TechniqueHandler):
+
     def __init__(self, combodict):
         self.dirs = combodict['dirs']
         self.key = combodict['key']
@@ -95,19 +93,19 @@ class SlurHandler(TechniqueHandler):
         self.inwait = combodict['in']
         self.afterwait = combodict['aft']
     
-    def slur(directionarray, keyarray, sound, inwait, afterwait):
-        for i in range(len(directionarray)+1):
-            if i<len(directionarray):
-                keysBound[directionarray[i]].pressKey()
+    def slur(self, dirs, key, bip, inwait, afterwait):
+        for i in range(len(self.dirs)+1):
+            if i<len(self.dirs):
+                keysBound[self.dirs[i]].pressKey()
                 if inwait > 0:
                     t.wait_frames(inwait)
-            if i>0 and i != len(directionarray):
-                keysBound[directionarray[i-1]].releaseKey()
-        tap(keyarray,sound,inwait,0)
-        keysBound[directionarray[len(directionarray)-1]].releaseKey()
+            if i>0 and i != len(dirs):
+                keysBound[dirs[i-1]].releaseKey()
+        super.tap(self.key, self.bip, self.inwait, 0)
+        keysBound[dirs[len(dirs)-1]].releaseKey()
         
     def do_action(self):
-        slur(dirs, key, int(bip), int(inwait), int(afterwait))
+        self.slur(self.dirs, self.key, int(self.bip), int(self.inwait), int(self.afterwait))
         
 class PressHandler(TechniqueHandler):
     def __init__(self, combodict):
@@ -115,8 +113,8 @@ class PressHandler(TechniqueHandler):
         self.afterwait = combodict['aft']
         
     def do_action(self):
-        keysBound[key].pressKey()
-        t.wait_frames(int(afterwait))
+        keysBound[self.key].pressKey()
+        t.wait_frames(int(self.afterwait))
 
 class ReleaseHandler(TechniqueHandler):
     def __init__(self, combodict):
@@ -124,8 +122,8 @@ class ReleaseHandler(TechniqueHandler):
         self.afterwait = combodict['aft']
         
     def do_action(self):
-        keysBound[key].releaseKey()
-        t.wait_frames(int(afterwait))
+        keysBound[self.key].releaseKey()
+        t.wait_frames(int(self.afterwait))
         
 #get key configuration file and pack it into jsonfile library
 with open(keyconfig_file_path, 'r') as f:
@@ -146,17 +144,26 @@ with open(combo_data_file_path, 'r') as f:
 
 keyboard.wait('esc')
 
-for i in range(len(combofile["combo"])):
+actionsarray = []
+for i in range(0,len(combofile["combo"])-1):
     for technique in combofile["combo"][i]:
         if technique == 'tap':
+            actionsarray.append(TapHandler(combofile["combo"][i]['tap']))
+            #actionsarray[i] = TapHandler(combofile["combo"][i]['tap'])
             #build a tap combo with combofile["combo"][i]['tap']
             
         if technique == 'slur':
+            actionsarray.append(SlurHandler(combofile["combo"][i]['slur']))
+            #actionsarray[i] = TapHandler(combofile["combo"][i]['slur'])
             #build a slur combo with combofile["combo"][i]['slur']
             
         if technique == 'press':
+            actionsarray.append(PressHandler(combofile["combo"][i]['press']))
             #build a press with combofile["combo"][i]['press']
             
         if technique == 'release':
+            actionsarray.append(ReleaseHandler(combofile["combo"][i]['release']))
             #build a release with combofile["combo"][i]['slur']['release']
 
+for i in actionsarray:
+    i.do_action()
