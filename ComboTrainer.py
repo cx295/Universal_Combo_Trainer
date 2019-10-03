@@ -11,7 +11,18 @@ import os
 import time
 import json
 
-# from PyQt5.QtWidgets import QApplication, QLabel
+from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton, QVBoxLayout
+
+#app = QApplication([])
+#window = QWidget()
+#layout = QVBoxLayout()
+#layout.addWidget(QPushButton('Top'))
+#layout.addWidget(QPushButton('Bottom'))
+#window.setLayout(layout)
+#label = QLabel('Hello World')
+#label.show()
+#window.show()
+#app.exec_()
 
 combo_file_location_path = os.path.join(os.path.pardir, 'Universal_Combo_Trainer', 'combos')
 # combo_data_file_path = os.path.join(combo_file_location_path, 'IAD.json')
