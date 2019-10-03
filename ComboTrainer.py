@@ -15,8 +15,9 @@ import json
 
 combo_file_location_path = os.path.join(os.path.pardir, 'Universal_Combo_Trainer', 'combos')
 # combo_data_file_path = os.path.join(combo_file_location_path, 'IAD.json')
-# combo_data_file_path = os.path.join(combo_file_location_path, 'dbfz_universal_bnb.json')
-combo_data_file_path = os.path.join(combo_file_location_path, 'dbfz_vanish_into_2M.json')
+combo_data_file_path = os.path.join(combo_file_location_path, 'dbfz_universal_bnb.json')
+#combo_data_file_path = os.path.join(combo_file_location_path, 'Fireball.json')
+#combo_data_file_path = os.path.join(combo_file_location_path, 'dbfz_vanish_into_2M.json')
 
 print(combo_data_file_path)
 
@@ -107,7 +108,7 @@ class SlurHandler(TechniqueHandler):
                     t.wait_frames(inwait)
             if i > 0 and i != len(dirs):
                 keysBound[dirs[i - 1]].releaseKey()
-        super.tap(self.key, self.bip, self.inwait, 0)
+        super().tap(self.key, int(self.bip), int(self.inwait), 0)
         keysBound[dirs[len(dirs) - 1]].releaseKey()
 
     def do_action(self):
@@ -152,29 +153,29 @@ t = Timing(1)
 
 with open(combo_data_file_path, 'r') as f:
     combofile = json.load(f)
+    print("combofile is: ", combofile)
+    print("length of combofile[combo] is: ", len(combofile["combo"]))
 
 keyboard.wait('esc')
 
 actionsarray = []
-for i in range(0, len(combofile["combo"]) - 1):
+for i in range(len(combofile["combo"])):
     for technique in combofile["combo"][i]:
         if technique == 'tap':
+            print('calling TapHandler')
             actionsarray.append(TapHandler(combofile["combo"][i]['tap']))
-            # actionsarray[i] = TapHandler(combofile["combo"][i]['tap'])
-            # build a tap combo with combofile["combo"][i]['tap']
 
         if technique == 'slur':
+            print('calling SlurHandler')
             actionsarray.append(SlurHandler(combofile["combo"][i]['slur']))
-            # actionsarray[i] = TapHandler(combofile["combo"][i]['slur'])
-            # build a slur combo with combofile["combo"][i]['slur']
 
         if technique == 'press':
+            print('calling PressHandler')
             actionsarray.append(PressHandler(combofile["combo"][i]['press']))
-            # build a press with combofile["combo"][i]['press']
 
         if technique == 'release':
+            print('calling ReleaseHandler')
             actionsarray.append(ReleaseHandler(combofile["combo"][i]['release']))
-            # build a release with combofile["combo"][i]['slur']['release']
 
 for i in actionsarray:
     i.do_action()
