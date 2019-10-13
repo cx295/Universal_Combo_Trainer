@@ -38,6 +38,14 @@ namespace TestProject01
         {
             actionList.Add(item);
         }
+
+        public void runActionList()
+        {
+            for (int i = 0; i < actionList.Count; i++)
+            {
+                actionList[i]();
+            }
+        }
     }
 
     public class TechniqueHandler
