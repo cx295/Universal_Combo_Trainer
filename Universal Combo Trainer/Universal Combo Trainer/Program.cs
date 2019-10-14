@@ -2,8 +2,9 @@
 using WindowsInput.Native;
 using WindowsInput;
 using System.Collections.Generic;
+using Stateless;
 
-namespace TestProject01
+namespace UniversalComboTrainer 
 {
     public class TimingHandler
     {
@@ -98,10 +99,12 @@ namespace TestProject01
             th.waitframe(1);
             th.release("up");
             th.release("right");
-            th.waitframe(3);
+            th.waitframe(5);
             th.press("right");
             th.waitframe(1);
             th.release("right");
+
+            
 
             int i = 0;
             while(i < 1)
