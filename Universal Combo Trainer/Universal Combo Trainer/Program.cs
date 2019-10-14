@@ -8,25 +8,21 @@ namespace TestProject01
     public class TimingHandler
     {
         private float scaling;
-
-        public TimingHandler(float i)
+        public float Scaling
         {
-            scaling = i;
+            get
+            {
+                return scaling;
+            }
+            set
+            {
+                scaling = value;
+            }
         }
 
-        public float getTimeScaling()
+        public int frame_to_ms(int frames)
         {
-            return scaling;
-        }
-
-        public void setTimeScaling(float i)
-        {
-            scaling = i;
-        }
-
-        public float frame_to_ms(int frames)
-        {
-            return (frames / 60) * scaling * 1000;
+            return (int)((frames / 60) * scaling * 1000);
         }
     }
 
@@ -41,26 +37,41 @@ namespace TestProject01
 
         public void runActionList()
         {
-            for (int i = 0; i < actionList.Count; i++)
+            foreach (Action act in actionList)
             {
-                actionList[i]();
+                act();
             }
         }
     }
 
     public class TechniqueHandler
     {
-        public TechniqueHandler(ActionListHandler alh, TimingHandler timing)
+        private ActionListHandler alh;
+        private TimingHandler timing;
+        private InputSimulator sim = new InputSimulator();
+        Dictionary<string, VirtualKeyCode> dict = new Dictionary<string, VirtualKeyCode>();
+
+        public TechniqueHandler(ActionListHandler alhandler, TimingHandler timinghandler)
         {
-            InputSimulator sim = new InputSimulator();
+            alh = alhandler;
+            timing = timinghandler;
 
-            void pressdownSkey()
-            {
-                sim.Keyboard.KeyDown(VirtualKeyCode.VK_S);
-            }
+            dict.Add("A", VirtualKeyCode.VK_A);
+        }
 
-            alh.addToActionList(pressdownSkey);
+        public void press (string key)
+        {
+            alh.addToActionList(() => sim.Keyboard.KeyDown(dict[key]));
+        }
 
+        public void release (string key)
+        {
+            alh.addToActionList(() => sim.Keyboard.KeyUp(dict[key]));
+        }
+
+        public void waitframe (int frames)
+        {
+            alh.addToActionList(() => sim.Keyboard.Sleep(timing.frame_to_ms(frames)));
         }
     }
 
