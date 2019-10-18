@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Resources;
 using WindowsInput.Native;
 using WindowsInput;
 using System.Collections.Generic;
 using Stateless;
+//using UniversalComboTrainer.Properties;
 
 namespace UniversalComboTrainer 
 {
@@ -93,6 +95,8 @@ namespace UniversalComboTrainer
             ActionListHandler alh = new ActionListHandler();
             TechniqueHandler th = new TechniqueHandler(alh, t);
             InputSimulator sim = new InputSimulator();
+
+            var myfile = Universal_Combo_Trainer.Properties.Resources.IAD;
 
             th.press("up");
             th.press("right");
