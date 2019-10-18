@@ -99,7 +99,7 @@ namespace UniversalComboTrainer
             th.waitframe(1);
             th.release("up");
             th.release("right");
-            th.waitframe(5);
+            th.waitframe(60);
             th.press("right");
             th.waitframe(1);
             th.release("right");

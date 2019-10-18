@@ -11,4 +11,9 @@
     <PackageReference Include="Stateless" Version="4.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ComboMoves\" />
+    <Folder Include="Keybindings\" />
+  </ItemGroup>
+
 </Project>
