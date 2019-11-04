@@ -1,6 +1,6 @@
 {
-"game":"DragonBallFighterZ", 
-    "buttonConfig": {
+"gameTitle":"DragonBall Fighter Z", 
+    "CmdtoL": {
         "up": "w",
         "down": "s",
         "left": "a",
@@ -8,9 +8,9 @@
         "L": "u",
         "M": "i",
         "H": "p",
-		"S": "j",
+		    "S": "j",
         "A1": "k",
         "A2": ";",
-		"wait": "esc"
+		    "wait": "esc"
     }
 }
