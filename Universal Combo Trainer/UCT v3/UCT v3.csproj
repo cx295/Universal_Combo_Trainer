@@ -10,7 +10,8 @@
   <ItemGroup>
     <Folder Include="Combos\DBFZ\" />
     <Folder Include="Combos\Universal\" />
-    <Folder Include="ModelView\" />
+    <Folder Include="ModelViews\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
