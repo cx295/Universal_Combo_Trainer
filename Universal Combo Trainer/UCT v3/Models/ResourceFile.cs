@@ -8,6 +8,8 @@ namespace UCT_v3.Models
     {
         public string ResourceFileName { get; set; }
 
-        public string ResourceBasePath { get; set; }
+        public string ResourceDefaultPath { get; set; }
+
+        public string ResourceFullPath { get; set; }
     }
 }

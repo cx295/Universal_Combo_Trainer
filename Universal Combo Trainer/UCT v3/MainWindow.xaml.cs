@@ -21,39 +21,13 @@ namespace UCT_v3
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ModelViews.MainWindowViewModel _mainWindowViewModel;
+
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        static string currentDirectory = Directory.GetCurrentDirectory();
-        private void getKeybindingsFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.DefaultExt = ".json";
-            openFileDialog.Filter = "JSON files (.json)|*.json";
-            string keybindingsDirectory = System.IO.Path.GetFullPath(System.IO.Path.Combine(currentDirectory, @"..\..\..\Keybindings"));
-            openFileDialog.InitialDirectory = keybindingsDirectory;
-            Nullable<bool> result = openFileDialog.ShowDialog();
-
-            if (result == true)
-            {
-                keyFilePathTextbox.Text = openFileDialog.FileName;
-            }
-        }
-
-        private void getComboFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.DefaultExt = ".json";
-            openFileDialog.Filter = "JSON files (.json)|*.json";
-            string combosDirectory = System.IO.Path.GetFullPath(System.IO.Path.Combine(currentDirectory, @"..\..\..\Combos"));
-            openFileDialog.InitialDirectory = combosDirectory;
-            Nullable<bool> result = openFileDialog.ShowDialog();
-            if(result == true)
-            {
-                comboFilePathTextbox.Text = openFileDialog.FileName;
-            }
+            _mainWindowViewModel = new ModelViews.MainWindowViewModel();
+            DataContext = _mainWindowViewModel;
         }
     }
 }
