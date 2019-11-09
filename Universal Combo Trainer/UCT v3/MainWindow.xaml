@@ -31,8 +31,8 @@
         <TextBox Grid.Row="2" Grid.Column="1" Text="Combo file"/>
         <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding KeyPathandFile}"/>
         <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding ComboPathandFile}"/>
-        <Button Grid.Row="1" Grid.Column="3" Margin="10 10 10 10" x:Name="getKeybindingsFileButton" Content="Browse" Click="getKeybindingsFileButton_Click"/>
-        <Button Grid.Row="2" Grid.Column="3" Margin="10 10 10 10" x:Name="getComboFileButton" Content="Browse" Click="getComboFileButton_Click"/>
+        <Button Grid.Row="1" Grid.Column="3" Margin="10 10 10 10" Content="Browse"/>
+        <Button Grid.Row="2" Grid.Column="3" Margin="10 10 10 10" Content="Browse"/>
         <ListBox Grid.Row="1" Grid.Column="0"/>
 
     </Grid>
