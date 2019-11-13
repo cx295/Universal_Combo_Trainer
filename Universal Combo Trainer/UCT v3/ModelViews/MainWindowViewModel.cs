@@ -9,9 +9,14 @@ namespace UCT_v3.ModelViews
     sealed class MainWindowViewModel : INotifyPropertyChanged
     {
         private Models.ResourceFile comboresource;
+        
         private Models.ResourceFile keyresource;
+       
         private ICommand browsecombocommand;
+       
         private ICommand browsekeycommand;
+
+        private bool canExecute = true;
 
         public MainWindowViewModel()
         {

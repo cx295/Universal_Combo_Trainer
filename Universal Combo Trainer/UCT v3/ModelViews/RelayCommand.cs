@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace UCT_v3.ModelViews
+namespace UCT_v3.Models
 {
-    public class BrowseCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private Action<object> execute;
 
@@ -13,8 +13,24 @@ namespace UCT_v3.ModelViews
 
         private event EventHandler CanExecuteChangedInternal;
 
-        public BrowseCommand(Action<object> execute)
+        public RelayCommand(Action<object> execute)
+            :this(execute, DefaultCanExecute)
         {
+        }
+
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        {
+            if (execute == null)
+            {
+                throw new ArgumentNullException("execute");
+            }
+            if (canExecute == null)
+            {
+                throw new ArgumentNullException("canExecute");
+            }
+
+            this.execute = execute;
+            this.canExecute = canExecute;
         }
 
         public event EventHandler CanExecuteChanged
@@ -30,6 +46,7 @@ namespace UCT_v3.ModelViews
                 this.CanExecuteChangedInternal -= value;
             }
         }
+
         public bool CanExecute(object parameter)
         {
             return this.canExecute != null && this.canExecute(parameter);
@@ -40,7 +57,7 @@ namespace UCT_v3.ModelViews
             this.execute(parameter);
         }
 
-        public void OnCanExecuteChanged()
+        public void OnExecuteChanged()
         {
             EventHandler handler = this.CanExecuteChangedInternal;
             if(handler != null)
@@ -48,6 +65,7 @@ namespace UCT_v3.ModelViews
                 handler.Invoke(this, EventArgs.Empty);
             }
         }
+
         public void Destroy()
         {
             this.canExecute = _ => false;
