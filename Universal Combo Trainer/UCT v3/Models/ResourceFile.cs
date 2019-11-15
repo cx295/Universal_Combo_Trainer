@@ -11,5 +11,9 @@ namespace UCT_v3.Models
         public string ResourceDefaultPath { get; set; }
 
         public string ResourceFullPath { get; set; }
+
+        public string DefaultExtention { get; set; }
+
+        public string Filter { get; set; }
     }
 }
