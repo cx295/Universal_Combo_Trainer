@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EDS.MVVM.Commands;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -51,40 +52,17 @@ namespace UCT_v3.ModelViews
             }
         }
 
-        public ICommand BrowseComboCommand
-        {
-            get
-            {
-                return browsecombocommand;
-            }
-            set
-            {
-                browsecombocommand = value;
-            }
-        }
+        public ICommand BrowseComboCommand => browsecombocommand ??= new DelegateCommand<comboresource>(BrowseForFile);
 
-        public ICommand BrowseKeyCommand
-        {
-            get
-            {
-                return browsekeycommand;
-            }
-            set
-            {
-                browsekeycommand = value;
-            }
-        }
+        public ICommand BrowseKeyCommand => browsekeycommand ??= new DelegateCommand<ResourceFile>(BrowseForFile);
 
         public MainWindowViewModel()
         {
-            comboresource = new Models.ResourceFile();
-            keyresource = new Models.ResourceFile();
-
-            BrowseComboCommand = new RelayCommand(BrowseForFile, param => comboresource);
-            BrowseKeyCommand = new RelayCommand(BrowseForFile, param => keyresource);
+            comboresource = new ResourceFile();
+            keyresource = new ResourceFile();
         }
 
-        public void BrowseForFile(Models.ResourceFile resourceFile)
+        public void BrowseForFile(ResourceFile resourceFile)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = resourceFile.DefaultExtention;
@@ -96,6 +74,16 @@ namespace UCT_v3.ModelViews
             {
                 resourceFile.ResourceFullPath = dlg.FileName;
             }
+        }
+
+        public bool ComboCanRun()
+        {
+            return true;
+        }
+        
+        public bool KeyCanRun()
+        {
+            return true;
         }
 
         public string ComboPathandFile
