@@ -52,9 +52,9 @@ namespace UCT_v3.ModelViews
             }
         }
 
-        public ICommand BrowseComboCommand => browsecombocommand ??= new DelegateCommand<comboresource>(BrowseForFile);
+        public ICommand BrowseComboCommand => browsecombocommand ??= new DelegateCommand(browseCombo);
 
-        public ICommand BrowseKeyCommand => browsekeycommand ??= new DelegateCommand<ResourceFile>(BrowseForFile);
+        public ICommand BrowseKeyCommand => browsekeycommand ??= new DelegateCommand(browseKey);
 
         public MainWindowViewModel()
         {
@@ -62,7 +62,17 @@ namespace UCT_v3.ModelViews
             keyresource = new ResourceFile();
         }
 
-        public void BrowseForFile(ResourceFile resourceFile)
+        public void browseCombo()
+        {
+            BrowseForFile(comboresource);
+        }
+
+        public void browseKey()
+        {
+            BrowseForFile(keyresource);
+        }
+
+        private void BrowseForFile(ResourceFile resourceFile)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = resourceFile.DefaultExtention;
